@@ -3,6 +3,12 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+input CatInput {
+  name: String!
+  age: Int!
+  breed: String!
+}
+
 type CreateCatDto {
   id: ID!
   name: String!
@@ -10,7 +16,12 @@ type CreateCatDto {
   breed: String!
 }
 
+type Mutation {
+  create(input: CatInput!): CreateCatDto!
+}
+
 type Query {
   hello(name: String!): String!
   cats: [CreateCatDto!]!
+  getCat(id: Int!): CreateCatDto!
 }

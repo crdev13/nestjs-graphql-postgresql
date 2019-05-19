@@ -1,17 +1,29 @@
-import { Resolver, Args, Query } from '@nestjs/graphql';
+import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
+import { CatInput } from './inputs/cat.input';
+import { Int } from 'type-graphql';
 
 @Resolver()
 export class CatsResolver {
   constructor(private readonly catsService: CatsService) {}
 
-  @Query(returns => String)
+  @Query(() => String)
   async hello(@Args({ name: 'name', type: () => String }) name: string) {
     return `Hello => ${name}`;
   }
-  @Query(returns => [CreateCatDto])
+  @Query(() => [CreateCatDto])
   async cats() {
     return this.catsService.findAllCats();
+  }
+
+  @Query(() => CreateCatDto)
+  async getCat(@Args({ name: 'id', type: () => Int }) id: number) {
+    return this.catsService.getCat(id);
+  }
+
+  @Mutation(() => CreateCatDto)
+  async create(@Args('input') cat: CatInput) {
+    return this.catsService.createCat(cat);
   }
 }
