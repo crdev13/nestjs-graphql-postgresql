@@ -20,4 +20,16 @@ export class CatsService {
   async createCat(cat: CatInput): Promise<Cat> {
     return await this.CATS_REPOSITORY.create<Cat>(cat);
   }
+  async update(cat: CatInput): Promise<Cat> {
+    const { name, age, breed, id } = cat;
+    const response = await this.CATS_REPOSITORY.update(
+      { name, age, breed, id },
+      { where: { id }, returning: true },
+    );
+    const [updated, updatedCat] = response;
+    if (!!updated) {
+      return updatedCat[0].dataValues as Cat;
+    }
+    return;
+  }
 }

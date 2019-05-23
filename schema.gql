@@ -4,6 +4,7 @@
 # -----------------------------------------------
 
 input CatInput {
+  id: ID
   name: String!
   age: Int!
   breed: String!
@@ -18,10 +19,11 @@ type CreateCatDto {
 
 type Mutation {
   create(input: CatInput!): CreateCatDto!
+  updateCat(input: CatInput!): CreateCatDto!
 }
 
 type Query {
   hello(name: String!): String!
   cats: [CreateCatDto!]!
-  getCat(id: Int!): CreateCatDto!
+  getCat(id: Int!): CreateCatDto
 }

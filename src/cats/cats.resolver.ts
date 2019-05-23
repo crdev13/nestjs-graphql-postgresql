@@ -17,7 +17,7 @@ export class CatsResolver {
     return this.catsService.findAllCats();
   }
 
-  @Query(() => CreateCatDto)
+  @Query(() => CreateCatDto, { nullable: true })
   async getCat(@Args({ name: 'id', type: () => Int }) id: number) {
     return this.catsService.getCat(id);
   }
@@ -25,5 +25,10 @@ export class CatsResolver {
   @Mutation(() => CreateCatDto)
   async create(@Args('input') cat: CatInput) {
     return this.catsService.createCat(cat);
+  }
+
+  @Mutation(() => CreateCatDto)
+  async updateCat(@Args('input') cat: CatInput) {
+    return this.catsService.update(cat);
   }
 }
